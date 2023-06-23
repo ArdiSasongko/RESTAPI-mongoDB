@@ -35,6 +35,28 @@ const getPeople = async (req, res) => {
   }
 }
 
+const getbyId = async (req,res) =>{
+  try {
+    const { id } = req.params
+    const people = await People.findById(id)
+    if(people){
+      const dataPeople = [people].map((data)=>{
+        const { name, age } = data
+        return { name, age}
+      })
+
+      const response = new Response.Success(false, "Find Data", dataPeople)
+      res.status(httpStatus.OK).json(response)
+    }else{
+      const response = new Response.Error(true, "Data not Found")
+      res.status(httpStatus.BAD_REQUEST).json(response)
+    }
+  } catch (error) {
+    const response = new Response.Error(true, error.message);
+    res.status(httpStatus.BAD_REQUEST).json(response);
+  }
+}
+
 const updatePeople = async (req,res) =>{
   try{
     const { id } = req.params
@@ -72,4 +94,4 @@ const deletePeople = async (req,res) =>{
   }
 }
 
-module.exports = { addPeople, getPeople, updatePeople, deletePeople };
+module.exports = { addPeople, getPeople, getbyId, updatePeople, deletePeople };
