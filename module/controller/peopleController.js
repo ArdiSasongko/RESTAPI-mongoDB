@@ -35,4 +35,41 @@ const getPeople = async (req, res) => {
   }
 }
 
-module.exports = { addPeople, getPeople };
+const updatePeople = async (req,res) =>{
+  try{
+    const { id } = req.params
+    const request = await peopleValidator.validateAsync(req.body)
+    const result = await People.findByIdAndUpdate(id, request, {new:true})
+
+    if(result){
+      const response = new Response.Success(false, "Success Update", result)
+      res.status(httpStatus.OK).json(response)
+    }else{
+      const response = new Response.Error(true, "Cant Find Id")
+      res.status(httpStatus.BAD_REQUEST).json(response)
+    }
+  }catch(error){
+      const response = new Response.Error(true, error.message)
+      res.status(httpStatus.BAD_REQUEST).json(response)
+  }
+}
+
+const deletePeople = async (req,res) =>{
+  try{
+    const { id } = req.params
+    const result = await People.findByIdAndDelete(id)
+
+    if(result){
+      const response = new Response.Success(false, "Success Delete", result)
+      res.status(httpStatus.OK).json(response)
+    }else{
+      const response = new Response.Error(true, "Cant Delete")
+      res.status(httpStatus.BAD_REQUEST).json(response)
+    }
+  }catch(error){
+    const response = new Response.Error(true, error.message)
+    res.status(httpStatus.BAD_REQUEST).json(response)
+  }
+}
+
+module.exports = { addPeople, getPeople, updatePeople, deletePeople };
