@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080
 
 //router
 const peopleroute = require("./module/route/peopleroute")
+const adminroute = require("./module/route/adminroute")
 const app = express()
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/people", peopleroute);
+app.use("/admin", adminroute)
 
 app.listen(PORT, () =>{
     console.log(`Server Running in http://localhost:${PORT}`)
