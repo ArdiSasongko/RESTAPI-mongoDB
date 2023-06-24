@@ -1,8 +1,8 @@
 const joi = require("joi")
 
-const adminValidator = joi.object({
+const LoginValidator = joi.object({
     username : joi.string().required(),
     password : joi.string().required()
 })
 
-module.exports = adminValidator
+module.exports = LoginValidator
