@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080
 
 //router
 const peopleroute = require("./module/route/peopleroute")
+const peoplerouteuser = require("./module/route/peoplerouteuser")
 const adminroute = require("./module/route/adminroute")
 const userroute = require("./module/route/userroute")
 const app = express()
@@ -23,7 +24,8 @@ app.get("/",(req,res)=>{
     res.status(200).send("Response Success")
 })
 
-app.use("/people", peopleroute);
+app.use("/admin/people", peopleroute);
+app.use("/user/people", peoplerouteuser);
 app.use("/admin", adminroute);
 app.use("/user", userroute);
 
